@@ -23,8 +23,8 @@ bcrypt==4.2.1
 mistralai==1.5.0
 
 # --- RAG System ---
-faiss-cpu==1.9.0.post1
-sentence-transformers==3.3.1
+faiss-cpu>=1.8.0
+sentence-transformers>=3.0.0
 
 # --- Machine Learning ---
 pandas==2.2.3
