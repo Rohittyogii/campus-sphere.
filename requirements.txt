@@ -1,30 +1,29 @@
 # ============================================================
-# Campus Sphere — Python Dependencies
-# Install: pip install -r requirements.txt
+# Campus Sphere — Python Dependencies (Optimized for Render)
 # ============================================================
 
 # --- Web Framework ---
-fastapi==0.115.6
-uvicorn[standard]==0.34.0
-python-multipart==0.0.20
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+python-multipart>=0.0.6
 
 # --- Database ---
-sqlalchemy==2.0.36
-asyncpg==0.30.0
-alembic==1.14.1
-psycopg2-binary==2.9.10
+sqlalchemy>=2.0.0
+asyncpg>=0.28.0
+alembic>=1.11.0
+psycopg2-binary>=2.9.0
 
 # --- Authentication ---
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-bcrypt==4.2.1
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.0
+bcrypt>=4.0.0
 
 # --- AI / LLM ---
-mistralai==1.5.0
+mistralai>=1.0.0
 
 # --- RAG System ---
-faiss-cpu>=1.8.0
-sentence-transformers>=3.0.0
+faiss-cpu>=1.7.0
+sentence-transformers>=2.2.0
 
 # --- Machine Learning ---
 pandas>=2.0.0
@@ -40,15 +39,7 @@ pydantic-settings>=2.0.0
 python-dotenv>=1.0.0
 
 # --- HTTP Client ---
-httpx==0.28.1
-
-# --- CORS ---
-# (included in FastAPI)
-
-# --- Testing ---
-pytest==8.3.4
-pytest-asyncio==0.25.0
-httpx==0.28.1
+httpx>=0.24.0
 
 # --- Utilities ---
-loguru==0.7.3
+loguru>=0.7.0
