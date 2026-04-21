@@ -19,7 +19,7 @@ passlib[bcrypt]>=1.7.0
 bcrypt>=4.0.0
 
 # --- AI / LLM ---
-mistralai>=1.0.0
+mistralai==1.5.0
 
 # --- RAG System ---
 faiss-cpu>=1.7.0

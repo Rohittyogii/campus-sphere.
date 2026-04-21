@@ -14,7 +14,7 @@ services:
     name: campus-sphere-api
     plan: free
     runtime: python
-    buildCommand: python -m pip install --upgrade pip && pip install -r requirements.txt
+    buildCommand: python --version && python -m pip install --upgrade pip && pip install -r requirements.txt
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT --workers 1
     envVars:
       - key: APP_ENV
@@ -22,6 +22,8 @@ services:
       - key: DEBUG
         value: "false"
       - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: RENDER_PYTHON_VERSION
         value: "3.11.9"
       - key: DATABASE_HOST
         fromDatabase:
