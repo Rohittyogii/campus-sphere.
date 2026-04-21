@@ -1,0 +1,1 @@
+{"roll_no": "22CSU057", "career_objective": "Software Engineer", "technical_skills": "Python, Power BI, SQL, React"}

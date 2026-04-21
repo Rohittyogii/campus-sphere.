@@ -1,0 +1,95 @@
+from mistralai import Mistral
+from backend.config import settings
+from backend.database.vector_db import vector_db
+import logging
+
+try:
+    from sentence_transformers import SentenceTransformer
+    # We load the embedding model once here. In a heavy production app, 
+    # we'd lazy-load or use an API to avoid consuming a lot of RAM.
+    print("Initializing embedding model for RAG queries...")
+    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+except ImportError:
+    embedding_model = None
+
+logger = logging.getLogger(__name__)
+
+class RAGService:
+    def __init__(self):
+        self.client = None
+        if settings.MISTRAL_API_KEY:
+            self.client = Mistral(api_key=settings.MISTRAL_API_KEY)
+        else:
+            logger.warning("MISTRAL_API_KEY is not set. Inference will not work.")
+
+    async def get_answer(self, user_query: str, student_profile: dict = None) -> str:
+        """
+        Retrieves context using FAISS + SentenceTransformers, then generates 
+        an answer using the Mistral LLM. Injects student profile for personalization.
+        """
+        if not self.client:
+            return "Mistral API Key is missing. Please add MISTRAL_API_KEY to your .env file."
+        
+        if not embedding_model:
+            return "Embedding model is not loaded. Please ensure sentence-transformers is installed."
+
+        if vector_db.index is None:
+            return "FAISS index is not built. Please build it first."
+
+        # 1. Embed user query
+        query_emb = embedding_model.encode([user_query])
+        query_emb = query_emb.astype('float32')
+
+        # 2. Retrieve top-k context
+        retrieved_docs = vector_db.search(query_emb, k=3)
+        context_str = "\n".join([f"- {doc}" for doc in retrieved_docs])
+
+        # 3. Build personalized student profile block
+        profile_block = ""
+        if student_profile:
+            profile_block = f"""
+STUDENT PROFILE (the person asking this question):
+- Full Name: {student_profile.get('name', 'N/A')}
+- Roll Number: {student_profile.get('roll_no', 'N/A')}
+- Branch: {student_profile.get('branch', 'N/A')}
+- Course: {student_profile.get('course', 'N/A')}
+- Specialization: {student_profile.get('specialization', 'N/A')}
+- Section: {student_profile.get('section', 'N/A')}
+- Career Objective: {student_profile.get('career_objective', 'N/A')}
+- Technical Skills: {student_profile.get('technical_skills', 'N/A')}
+- Soft Skills: {student_profile.get('soft_skills', 'N/A')}
+"""
+
+        # 4. Ask LLM with full context
+        prompt = f"""You are Campus Sphere AI — a specialized academic companion. 
+You are currently helping {student_profile.get('name', 'a student')}.
+
+STRICT INSTRUCTIONS:
+1. You HAVE direct access to the student's personal data provided in the block below. 
+2. NEVER use standard AI disclaimers like "I don't have direct access to your personal records". 
+3. If asked about name, branch, skills, or academics, use the STUDENT PROFILE below.
+4. If a field in the profile is empty (N/A), suggest the student update it in their profile page.
+5. Use the CAMPUS CONTEXT for information about clubs, cafe, library, and IRO.
+
+{profile_block}
+
+CAMPUS CONTEXT:
+{context_str}
+
+USER QUERY: {user_query}
+
+ANSWER:"""
+        try:
+            response = self.client.chat.complete(
+                model="mistral-tiny",
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            return response.choices[0].message.content
+        except Exception as e:
+            logger.error(f"Mistral API Error: {e}")
+            return f"Sorry, I encountered an error communicating with the AI service: {str(e)}"
+
+# Singleton
+rag_service = RAGService()

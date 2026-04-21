@@ -1,0 +1,273 @@
+:root {
+  --login-bg: #f8fafc;
+  --login-card-bg: #ffffff;
+  --login-accent: #2563eb; /* Blue as seen in the screenshot */
+  --login-accent-hover: #1d4ed8;
+  --login-accent-glow: rgba(37, 99, 235, 0.2);
+  --login-text-primary: #1e293b;
+  --login-text-secondary: #64748b;
+  --ncu-orange: #f26522;
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Form on the left */
+  padding-left: 10%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Dark overlay for the background image */
+.login-page::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+/* Floating Login Card */
+.login-card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: slideInLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-logo {
+  width: 60px;
+  height: auto;
+  margin-bottom: 1.5rem;
+}
+
+.form-header h1 {
+  font-size: 1.75rem;
+  color: var(--login-text-primary);
+  font-weight: 800;
+  margin-bottom: 0.25rem;
+}
+
+.form-header .tagline {
+  color: var(--login-text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.welcome-msg {
+  margin-bottom: 1rem;
+}
+
+.welcome-msg h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--login-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.welcome-msg p {
+  font-size: 0.9rem;
+  color: var(--login-text-secondary);
+}
+
+/* Blue Info Banner */
+.info-banner {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-banner .info-icon {
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.info-banner p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+/* Form Styles */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-container label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.input-field-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 48px; /* Fixed height protects icons */
+}
+
+.input-field-wrapper input {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #e2e8f0 !important;
+  padding: 0 1rem 0 2.8rem !important;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+
+.input-field-wrapper input:focus {
+  outline: none;
+  border-color: var(--login-accent) !important;
+  box-shadow: 0 0 0 4px var(--login-accent-glow) !important;
+}
+
+.input-field-wrapper .input-icon {
+  position: absolute;
+  left: 1rem;
+  color: #94a3b8;
+  z-index: 2; /* Force icon above input background */
+}
+
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--login-text-secondary);
+}
+
+.forgot-link {
+  color: var(--login-accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-btn {
+  background: var(--login-accent);
+  color: #fff;
+  border: none;
+  padding: 0.9rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.auth-btn:hover {
+  background: var(--login-accent-hover);
+  transform: translateY(-1px);
+}
+
+/* Hero Content on the right */
+.hero-overlay {
+  position: absolute;
+  right: 10%;
+  bottom: 15%;
+  z-index: 5;
+  max-width: 450px;
+  color: #fff;
+  animation: fadeIn 1.2s ease;
+}
+
+.hero-glass-card {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-glass-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.hero-glass-card p {
+  font-size: 1rem;
+  opacity: 0.9;
+  line-height: 1.6;
+}
+
+.slide-content {
+  min-height: 100px;
+  animation: slideFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.pagination-dots {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.4s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  width: 24px;
+  height: 6px;
+  border-radius: 3px;
+  background: white;
+}
+
+/* Animations */
+@keyframes slideFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 1024px) {
+  .login-page {
+    justify-content: center;
+    padding-left: 0;
+  }
+  .hero-overlay {
+    display: none;
+  }
+}

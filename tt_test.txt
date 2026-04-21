@@ -1,0 +1,1 @@
+{"section": "DB", "tt_count": 14, "sample": [{"course": "CHL100", "day": "Monday", "start": "13:30:00"}, {"course": "CLL200M", "day": "Tuesday", "start": "09:30:00"}, {"course": "MME001", "day": "Wednesday", "start": "08:30:00"}, {"course": "CSL312", "day": "Wednesday", "start": "11:30:00"}, {"course": "CSL316", "day": "Wednesday", "start": "12:30:00"}]}
