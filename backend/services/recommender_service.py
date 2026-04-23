@@ -3,8 +3,6 @@ Campus Sphere — Recommender System Service
 ============================================
 Provides multi-module recommendations using TF-IDF and Cosine Similarity.
 """
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
@@ -75,7 +73,10 @@ class RecommenderService:
         }
 
     def _get_top_matches(self, target_doc: str, corpus: list[str], items: list, top_k: int = 5):
-        """Helper to run TF-IDF cosine similarity."""
+        """Helper to run TF-IDF cosine similarity. Lazy-loads sklearn on first call."""
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        from sklearn.metrics.pairwise import cosine_similarity
+        
         if not corpus:
             return []
             

@@ -3,8 +3,6 @@ Campus Sphere — Core Recommender Engine
 =========================================
 Shared TF-IDF + Cosine Similarity utilities used by all recommender modules.
 """
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 import re
 
 
@@ -35,7 +33,11 @@ def tfidf_top_matches(target: str, corpus: list[str], items: list, top_k: int = 
     """
     Run TF-IDF cosine similarity between target and corpus.
     Returns: list of (item, score) sorted by score DESC.
+    Lazy-loads sklearn to minimize startup memory footprint.
     """
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity
+    
     if not corpus or not target.strip():
         return []
 
