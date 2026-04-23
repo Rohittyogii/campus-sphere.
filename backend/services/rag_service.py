@@ -5,14 +5,24 @@ import logging
 
 try:
     from sentence_transformers import SentenceTransformer
-    # We load the embedding model once here. In a heavy production app, 
-    # we'd lazy-load or use an API to avoid consuming a lot of RAM.
-    print("Initializing embedding model for RAG queries...")
-    embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    _sentence_transformers_available = True
 except ImportError:
-    embedding_model = None
+    _sentence_transformers_available = False
 
 logger = logging.getLogger(__name__)
+
+# Lazy-load the embedding model on first use to save memory on startup
+_embedding_model = None
+
+def get_embedding_model():
+    """Lazy-load embedding model on first use."""
+    global _embedding_model
+    if _embedding_model is None:
+        if not _sentence_transformers_available:
+            return None
+        print("Initializing embedding model for RAG queries...")
+        _embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+    return _embedding_model
 
 class RAGService:
     def __init__(self):
@@ -30,11 +40,12 @@ class RAGService:
         if not self.client:
             return "Mistral API Key is missing. Please add MISTRAL_API_KEY to your .env file."
         
+        embedding_model = get_embedding_model()
         if not embedding_model:
             return "Embedding model is not loaded. Please ensure sentence-transformers is installed."
 
-        if vector_db.index is None:
-            return "FAISS index is not built. Please build it first."
+        # Note: FAISS index will be lazy-loaded on first search
+        # Check is implicit in the search method
 
         # 1. Embed user query
         query_emb = embedding_model.encode([user_query])

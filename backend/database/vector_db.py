@@ -10,10 +10,13 @@ class VectorDBUser:
     def __init__(self):
         self.index = None
         self.doc_map = {}
-        self.load_index()
+        self._loaded = False
 
-    def load_index(self):
-        """Load the FAISS index and document map if they exist."""
+    def _ensure_loaded(self):
+        """Lazy load the FAISS index and document map on first use."""
+        if self._loaded:
+            return
+        
         if os.path.exists(FAISS_INDEX_PATH) and os.path.exists(DOC_MAP_PATH):
             self.index = faiss.read_index(FAISS_INDEX_PATH)
             with open(DOC_MAP_PATH, "r", encoding="utf-8") as f:
@@ -21,9 +24,13 @@ class VectorDBUser:
             print(f"Loaded FAISS index with {self.index.ntotal} vectors.")
         else:
             print("FAISS index not found. Please run scripts/build_vector_db.py.")
+        
+        self._loaded = True
 
     def search(self, query_embedding, k=3):
         """Search the nearest k neighbors to the query_embedding."""
+        self._ensure_loaded()  # Lazy load on first search
+        
         if self.index is None:
             return []
             
