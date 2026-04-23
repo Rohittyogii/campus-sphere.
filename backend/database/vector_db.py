@@ -1,6 +1,5 @@
 import os
 import json
-import faiss
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "data")
 FAISS_INDEX_PATH = os.path.join(DATA_DIR, "vector_index.faiss")
@@ -17,6 +16,7 @@ class VectorDBUser:
         if self._loaded:
             return
         
+        import faiss
         if os.path.exists(FAISS_INDEX_PATH) and os.path.exists(DOC_MAP_PATH):
             self.index = faiss.read_index(FAISS_INDEX_PATH)
             with open(DOC_MAP_PATH, "r", encoding="utf-8") as f:

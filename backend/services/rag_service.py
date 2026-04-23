@@ -1,12 +1,9 @@
 from backend.config import settings
 from backend.database.vector_db import vector_db
 import logging
+import importlib.util
 
-try:
-    from sentence_transformers import SentenceTransformer
-    _sentence_transformers_available = True
-except ImportError:
-    _sentence_transformers_available = False
+_sentence_transformers_available = importlib.util.find_spec("sentence_transformers") is not None
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +16,7 @@ def get_embedding_model():
     if _embedding_model is None:
         if not _sentence_transformers_available:
             return None
+        from sentence_transformers import SentenceTransformer
         print("Initializing embedding model for RAG queries...")
         _embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
     return _embedding_model
