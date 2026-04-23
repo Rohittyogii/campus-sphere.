@@ -1,4 +1,3 @@
-from mistralai import Mistral
 from backend.config import settings
 from backend.database.vector_db import vector_db
 import logging
@@ -24,20 +23,29 @@ def get_embedding_model():
         _embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
     return _embedding_model
 
-class RAGService:
-    def __init__(self):
-        self.client = None
+# Lazy-load Mistral client on first use
+_mistral_client = None
+
+def get_mistral_client():
+    """Lazy-load Mistral client on first use."""
+    global _mistral_client
+    if _mistral_client is None:
+        from mistralai import Mistral
         if settings.MISTRAL_API_KEY:
-            self.client = Mistral(api_key=settings.MISTRAL_API_KEY)
+            _mistral_client = Mistral(api_key=settings.MISTRAL_API_KEY)
         else:
             logger.warning("MISTRAL_API_KEY is not set. Inference will not work.")
+            _mistral_client = False  # Marker for "tried to load, but no key"
+    return _mistral_client if _mistral_client is not False else None
 
+class RAGService:
     async def get_answer(self, user_query: str, student_profile: dict = None) -> str:
         """
         Retrieves context using FAISS + SentenceTransformers, then generates 
         an answer using the Mistral LLM. Injects student profile for personalization.
         """
-        if not self.client:
+        client = get_mistral_client()
+        if not client:
             return "Mistral API Key is missing. Please add MISTRAL_API_KEY to your .env file."
         
         embedding_model = get_embedding_model()
@@ -91,7 +99,7 @@ USER QUERY: {user_query}
 
 ANSWER:"""
         try:
-            response = self.client.chat.complete(
+            response = client.chat.complete(
                 model="mistral-tiny",
                 messages=[
                     {"role": "user", "content": prompt}
@@ -102,5 +110,20 @@ ANSWER:"""
             logger.error(f"Mistral API Error: {e}")
             return f"Sorry, I encountered an error communicating with the AI service: {str(e)}"
 
-# Singleton
-rag_service = RAGService()
+# Lazy-load service singleton on first use
+_rag_service_instance = None
+
+def get_rag_service() -> RAGService:
+    """Lazy-load RAGService singleton."""
+    global _rag_service_instance
+    if _rag_service_instance is None:
+        _rag_service_instance = RAGService()
+    return _rag_service_instance
+
+# Lazy proxy that looks like the service but initializes on first attribute access
+class _RAGServiceLazyProxy:
+    def __getattr__(self, name):
+        service = get_rag_service()
+        return getattr(service, name)
+
+rag_service = _RAGServiceLazyProxy()

@@ -45,4 +45,20 @@ class ModuleService:
                 detail=f"The {module_id} module is currently disabled by administrator."
             )
 
-module_service = ModuleService()
+# Lazy-load service singleton on first use
+_module_service_instance = None
+
+def get_module_service():
+    """Lazy-load ModuleService singleton."""
+    global _module_service_instance
+    if _module_service_instance is None:
+        _module_service_instance = ModuleService()
+    return _module_service_instance
+
+# Lazy proxy that looks like the service but initializes on first attribute access
+class _ModuleServiceLazyProxy:
+    def __getattr__(self, name):
+        service = get_module_service()
+        return getattr(service, name)
+
+module_service = _ModuleServiceLazyProxy()

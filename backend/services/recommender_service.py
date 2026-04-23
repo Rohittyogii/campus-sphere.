@@ -94,4 +94,20 @@ class RecommenderService:
             # Vocabulary empty
             return []
 
-recommender_service = RecommenderService()
+# Lazy-load service singleton on first use
+_recommender_service_instance = None
+
+def get_recommender_service():
+    """Lazy-load RecommenderService singleton."""
+    global _recommender_service_instance
+    if _recommender_service_instance is None:
+        _recommender_service_instance = RecommenderService()
+    return _recommender_service_instance
+
+# Lazy proxy that looks like the service but initializes on first attribute access
+class _RecommenderServiceLazyProxy:
+    def __getattr__(self, name):
+        service = get_recommender_service()
+        return getattr(service, name)
+
+recommender_service = _RecommenderServiceLazyProxy()
