@@ -10,10 +10,12 @@ import ssl
 from backend.config import settings
 
 # Determine if we should use SSL (recommended for Supabase)
-connect_args = {}
+connect_args = {
+    # CRITICAL: Disable prepared statements for Supabase/pgbouncer transaction mode
+    "statement_cache_size": 0
+}
 if "localhost" not in settings.DATABASE_URL_FINAL and "127.0.0.1" not in settings.DATABASE_URL_FINAL:
     # Create an SSL context that does not verify the certificate
-    # (Required for Supabase poolers in some cloud environments)
     ssl_context = ssl.create_default_context()
     ssl_context.check_hostname = False
     ssl_context.verify_mode = ssl.CERT_NONE
@@ -27,8 +29,6 @@ engine = create_async_engine(
     max_overflow=10,           # Extra connections when pool is full
     pool_pre_ping=True,        # Verify connections before use
     connect_args=connect_args,
-    # CRITICAL: Disable prepared statements for Supabase/pgbouncer transaction mode
-    statement_cache_size=0,
 )
 
 # Session factory — creates new sessions
