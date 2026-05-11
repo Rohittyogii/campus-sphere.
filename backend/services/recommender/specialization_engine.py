@@ -31,21 +31,21 @@ def load_csv(filename):
             with open(csv_path, 'r', errors='ignore') as f:
                 line = f.readline()
                 if line.startswith('version https://git-lfs'):
-                    print(f"WARNING: {csv_path} is a Git LFS pointer. Skipping.")
-                    return pd.DataFrame()
+                    print(f"WARNING: {csv_path} is a Git LFS pointer. Data will be missing.")
+                    return None
             return pd.read_csv(csv_path)
         elif os.path.exists(xlsx_path):
             # Quick check for LFS pointer
             with open(xlsx_path, 'r', errors='ignore') as f:
                 line = f.readline()
                 if line.startswith('version https://git-lfs'):
-                    print(f"WARNING: {xlsx_path} is a Git LFS pointer. Skipping.")
-                    return pd.DataFrame()
-            return pd.read_excel(xlsx_path, engine='openpyxl')
+                    print(f"WARNING: {xlsx_path} is a Git LFS pointer. Data will be missing.")
+                    return None
+            return pd.read_excel(xlsx_path)
     except Exception as e:
-        print(f"⚠️ Warning: Could not load {filename} ({e}). Returning empty data to prevent crash.")
-        return pd.DataFrame()
-    return pd.DataFrame()
+        print(f"ERROR loading {filename}: {e}")
+        return None
+    return None
 
 class SpecializationEngine:
     def __init__(self):
