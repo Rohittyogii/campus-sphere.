@@ -37,11 +37,11 @@ class Settings(BaseSettings):
     DATABASE_URL_OVERRIDE: Optional[str] = None
 
     # Individual fields — used for local development
-    DATABASE_HOST: str = "localhost"
+    DATABASE_HOST: str = "db.arhrzzeteeplrxscxdtz.supabase.co"
     DATABASE_PORT: int = 5432
-    DATABASE_NAME: str = "campus_sphere"
+    DATABASE_NAME: str = "postgres"
     DATABASE_USER: str = "postgres"
-    DATABASE_PASSWORD: str = "postgres"
+    DATABASE_PASSWORD: str = "Yogi@859592"
 
     @property
     def DATABASE_URL(self) -> str:
