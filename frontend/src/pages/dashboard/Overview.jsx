@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Calendar, Clock, BookOpen, MapPin, Activity, Award, CheckCircle, XCircle, GraduationCap, Target, ChevronRight, Bell, ArrowRight, ChevronLeft } from 'lucide-react';
 import api from '../../services/api';
-import campus1 from '../../assets/campus1.png';
-import campus2 from '../../assets/campus2.png';
-import campus3 from '../../assets/campus3.png';
-import universityHero from '../../assets/university_hero.jpg';
-import eventSports from '../../assets/event_sports.png';
-import eventDance from '../../assets/event_dance.png';
-import eventPainting from '../../assets/event_painting.png';
-import eventEntertainment from '../../assets/event_entertainment.png';
+// Use direct paths from the public directory for stable production serving
+const campus1 = '/assets/campus1.png';
+const campus2 = '/assets/campus2.png';
+const campus3 = '/assets/campus3.png';
+const universityHero = '/assets/university_hero.jpg';
+const eventSports = '/assets/event_sports.png';
+const eventDance = '/assets/event_dance.png';
+const eventPainting = '/assets/event_painting.png';
+const eventEntertainment = '/assets/event_entertainment.png';
 
 // ── Timetable helpers ──────────────────────────────────────────────
 const TT_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];

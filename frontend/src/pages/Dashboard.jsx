@@ -34,7 +34,8 @@ import Feedback from './dashboard/Feedback';
 import Specialization from './dashboard/Specialization';
 import Placement from './dashboard/Placement';
 import './Dashboard.css';
-import sidebarLogo from '../assets/NCU-Logo.svg';
+// Use direct path from public directory for stable production serving
+const sidebarLogo = '/assets/NCU-Logo.svg';
 
 /* ═══════════════════════════════════════════════════════════════════
    Dashboard Shell

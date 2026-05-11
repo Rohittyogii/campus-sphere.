@@ -8,7 +8,8 @@ import {
   FileUp, FileDown
 } from 'lucide-react';
 import api from '../services/api';
-import sidebarLogo from '../assets/NCU-Logo.svg';
+// Use direct path from public directory for stable production serving
+const sidebarLogo = '/assets/NCU-Logo.svg';
 import './Dashboard.css';
 
 // ─── Sidebar tabs ────────────────────────────────────────────────────────────

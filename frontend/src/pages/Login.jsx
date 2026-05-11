@@ -7,14 +7,15 @@ import {
 } from 'lucide-react';
 import api from '../services/api';
 import './Login.css';
-import universityLogo from '../assets/logo.png';
-import login1 from '../assets/login 1.jpg';
-import login2 from '../assets/login 2.jpg';
-import login3 from '../assets/login 3.jpg';
-import login4 from '../assets/login 4.jpg';
-import login5 from '../assets/login 5.jpg';
-import login6 from '../assets/login 6.jpg';
-import login7 from '../assets/login 7.jpg';
+// Use direct paths from the public directory for stable production serving
+const universityLogo = '/assets/logo.png';
+const login1 = '/assets/login_1.jpg';
+const login2 = '/assets/login_2.jpg';
+const login3 = '/assets/login_3.jpg';
+const login4 = '/assets/login_4.jpg';
+const login5 = '/assets/login_5.jpg';
+const login6 = '/assets/login_6.jpg';
+const login7 = '/assets/login_7.jpg';
 
 const slides = [
   {
