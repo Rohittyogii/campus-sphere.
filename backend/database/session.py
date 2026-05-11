@@ -27,6 +27,8 @@ engine = create_async_engine(
     max_overflow=10,           # Extra connections when pool is full
     pool_pre_ping=True,        # Verify connections before use
     connect_args=connect_args,
+    # CRITICAL: Disable prepared statements for Supabase/pgbouncer transaction mode
+    statement_cache_size=0,
 )
 
 # Session factory — creates new sessions

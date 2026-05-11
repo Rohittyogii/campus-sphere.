@@ -8,9 +8,9 @@ Uses pydantic-settings for type-safe configuration.
 from pydantic_settings import BaseSettings
 from typing import List, Optional
 import re
+
+
 from urllib.parse import quote
-
-
 from loguru import logger
 
 
@@ -45,19 +45,17 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL_FINAL(self) -> str:
-        """Async PostgreSQL URL. Forced to use individual fields."""
+        """Async PostgreSQL URL. Forced to use individual fields for stability."""
         encoded_user = quote(self.DATABASE_USER.strip())
         encoded_password = quote(self.DATABASE_PASSWORD.strip())
         host = self.DATABASE_HOST.strip()
         port = self.DATABASE_PORT
         db_name = self.DATABASE_NAME.strip()
         
-        final_url = (
+        return (
             f"postgresql+asyncpg://{encoded_user}:{encoded_password}"
             f"@{host}:{port}/{db_name}"
         )
-        
-        return final_url
 
     @property
     def DATABASE_URL_SYNC(self) -> str:

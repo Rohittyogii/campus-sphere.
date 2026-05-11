@@ -42,7 +42,7 @@ async def lifespan(app: FastAPI):
     logger.info("🚀 Campus Sphere starting up...")
     logger.info(f"📌 Environment: {settings.APP_ENV}")
     logger.info(f"🗄️  Database: {settings.DATABASE_HOST}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}")
-    
+
     # Create tables if they don't exist
     try:
         async with engine.begin() as conn:
