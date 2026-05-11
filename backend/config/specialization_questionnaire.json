@@ -1,0 +1,31 @@
+[
+  {
+    "id": "q1",
+    "question": "How comfortable are you with complex mathematical problems and logic?",
+    "options": [
+      { "text": "Very comfortable", "scores": { "ai_ml": 5, "data_science": 4, "cyber_security": 3 } },
+      { "text": "Prefer applied logic over abstract math", "scores": { "full_stack": 5, "game_tech": 4 } },
+      { "text": "Moderate comfort", "scores": { "data_science": 3, "full_stack": 3 } }
+    ]
+  },
+  {
+    "id": "q2",
+    "question": "What kind of projects excite you most?",
+    "options": [
+      { "text": "Building visual interfaces and user experiences", "scores": { "full_stack": 5, "game_tech": 3 } },
+      { "text": "Finding patterns in large datasets", "scores": { "data_science": 5, "ai_ml": 4 } },
+      { "text": "Securing systems and finding vulnerabilities", "scores": { "cyber_security": 5 } },
+      { "text": "Creating immersive worlds and mechanics", "scores": { "game_tech": 5 } }
+    ]
+  },
+  {
+    "id": "q3",
+    "question": "Which programming environment do you prefer?",
+    "options": [
+      { "text": "Web Browsers & Cloud", "scores": { "full_stack": 5 } },
+      { "text": "Linux Terminal & Networking", "scores": { "cyber_security": 5, "full_stack": 2 } },
+      { "text": "Python Notebooks (Jupyter)", "scores": { "ai_ml": 5, "data_science": 5 } },
+      { "text": "Game Engines (Unity/Unreal)", "scores": { "game_tech": 5 } }
+    ]
+  }
+]

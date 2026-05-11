@@ -1,0 +1,36 @@
+{
+  "eligibility": [
+    {
+      "batch_prefix": "25",
+      "year": "First year",
+      "can_opt": true,
+      "opt_semesters": [1, 2],
+      "can_switch": false,
+      "switch_semesters": []
+    },
+    {
+      "batch_prefix": "24",
+      "year": "Second year",
+      "can_opt": false,
+      "opt_semesters": [],
+      "can_switch": true,
+      "switch_semesters": [3, 4, 5]
+    },
+    {
+      "batch_prefix": "23",
+      "year": "Third year",
+      "can_opt": false,
+      "opt_semesters": [],
+      "can_switch": true,
+      "switch_semesters": [3, 4, 5]
+    },
+    {
+      "batch_prefix": "22",
+      "year": "Final year",
+      "can_opt": false,
+      "opt_semesters": [],
+      "can_switch": false,
+      "switch_semesters": []
+    }
+  ]
+}
