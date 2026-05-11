@@ -1,30 +1,55 @@
-# Environments
-.env
-.venv
-venv
-ENV/
-env/
-
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-.pytest_cache/
-
-# Node / Frontend
-node_modules/
+*.egg-info/
 dist/
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+build/
+eggs/
+*.egg
+.Python
+env/
+venv/
+.venv/
 
-# OS Clutter
+# Environment
+.env
+*.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
 .DS_Store
 Thumbs.db
 
-# Large Data
-*.csv
-*.xlsx
-# (Optional: keep data/ folder if you want to push it, otherwise ignore it here)
+# Vector Store (large binary files)
+vector_store/*.faiss
+vector_store/*.pkl
+
+# Node
+node_modules/
+frontend/node_modules/
+frontend/dist/
+
+# Database
+*.db
+*.sqlite3
+
+# Logs
+logs/
+*.log
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Scratch & Temporary Scripts
+scratch/
+fix_*.js
+schedule_component.js

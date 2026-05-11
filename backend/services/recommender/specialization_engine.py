@@ -25,10 +25,26 @@ def load_csv(filename):
     csv_path = path.replace('.xlsx', '.csv')
     xlsx_path = path.replace('.csv', '.xlsx')
     
-    if os.path.exists(csv_path):
-        return pd.read_csv(csv_path)
-    elif os.path.exists(xlsx_path):
-        return pd.read_excel(xlsx_path)
+    try:
+        if os.path.exists(csv_path):
+            # Quick check for LFS pointer
+            with open(csv_path, 'r', errors='ignore') as f:
+                line = f.readline()
+                if line.startswith('version https://git-lfs'):
+                    print(f"WARNING: {csv_path} is a Git LFS pointer. Data will be missing.")
+                    return None
+            return pd.read_csv(csv_path)
+        elif os.path.exists(xlsx_path):
+            # Quick check for LFS pointer
+            with open(xlsx_path, 'r', errors='ignore') as f:
+                line = f.readline()
+                if line.startswith('version https://git-lfs'):
+                    print(f"WARNING: {xlsx_path} is a Git LFS pointer. Data will be missing.")
+                    return None
+            return pd.read_excel(xlsx_path)
+    except Exception as e:
+        print(f"ERROR loading {filename}: {e}")
+        return None
     return None
 
 class SpecializationEngine:

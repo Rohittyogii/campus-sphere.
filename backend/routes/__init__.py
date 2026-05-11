@@ -21,6 +21,7 @@ from backend.routes.recommendations import router as recommendations_router
 from backend.routes.feedback import router as feedback_router
 from backend.routes.community import router as community_router
 from backend.routes.specialization_api import router as specialization_router
+from backend.routes.placement import router as placement_router
 
 from backend.routes.notifications import router as notifications_router
 from backend.routes.announcements import router as announcements_router
@@ -44,6 +45,7 @@ api_router.include_router(recommendations_router, prefix="/recommendations",  ta
 api_router.include_router(feedback_router,        prefix="/feedback",        tags=["Feedback"])
 api_router.include_router(community_router,       prefix="/community",       tags=["Community Feed"])
 api_router.include_router(specialization_router,  prefix="/specialization",  tags=["Specialization Recommender"])
+api_router.include_router(placement_router,       prefix="/placement",       tags=["Placement AI"])
 api_router.include_router(notifications_router,   prefix="/notifications",   tags=["Notifications"])
 api_router.include_router(announcements_router,   prefix="/announcements",   tags=["Announcements"])
 
