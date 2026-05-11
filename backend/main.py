@@ -42,6 +42,7 @@ async def lifespan(app: FastAPI):
     logger.info("🚀 Campus Sphere starting up...")
     logger.info(f"📌 Environment: {settings.APP_ENV}")
     logger.info(f"🗄️  Database: {settings.DATABASE_HOST}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}")
+    logger.info(f"🔑 Env Keys: {list(os.environ.keys())}")
     
     # DNS Diagnostic
     import socket

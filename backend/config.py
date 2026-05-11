@@ -37,11 +37,6 @@ class Settings(BaseSettings):
                 raise ValueError("JWT_SECRET_KEY must be set and changed from default in production")
 
     # --- Database (PostgreSQL) ---
-    # Render/HuggingFace provides a full DATABASE_URL — use it if available
-    DATABASE_URL: Optional[str] = None
-    DATABASE_URL_OVERRIDE: Optional[str] = None
-
-    # Individual fields — used for local development
     DATABASE_HOST: str = "aws-1-ap-northeast-1.pooler.supabase.com"
     DATABASE_PORT: int = 6543
     DATABASE_NAME: str = "postgres"
@@ -50,16 +45,7 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL_FINAL(self) -> str:
-        """Async PostgreSQL URL. Priority: DATABASE_URL_OVERRIDE > DATABASE_URL > Individual Fields."""
-        raw_url = self.DATABASE_URL_OVERRIDE or self.DATABASE_URL
-        
-        if raw_url:
-            # Convert to asyncpg driver if necessary
-            url = re.sub(r"^postgresql://", "postgresql+asyncpg://", raw_url)
-            url = re.sub(r"^postgres://", "postgresql+asyncpg://", url)
-            logger.info(f"🔍 Using DATABASE_URL (overridden): {url.split('@')[-1]}") # Log only host part
-            return url
-        
+        """Async PostgreSQL URL. Forced to use individual fields."""
         encoded_user = quote(self.DATABASE_USER.strip())
         encoded_password = quote(self.DATABASE_PASSWORD.strip())
         host = self.DATABASE_HOST.strip()
@@ -80,12 +66,6 @@ class Settings(BaseSettings):
     @property
     def DATABASE_URL_SYNC(self) -> str:
         """Synchronous URL for Alembic migrations."""
-        raw_url = self.DATABASE_URL_OVERRIDE or self.DATABASE_URL
-        if raw_url:
-            url = re.sub(r"^postgresql://", "postgresql+psycopg2://", raw_url)
-            url = re.sub(r"^postgres://", "postgresql+psycopg2://", url)
-            return url
-        
         encoded_user = quote(self.DATABASE_USER)
         encoded_password = quote(self.DATABASE_PASSWORD)
         return (
