@@ -57,10 +57,6 @@ class Settings(BaseSettings):
             f"@{host}:{port}/{db_name}"
         )
         
-        # Log for debugging (redacted)
-        redacted_url = final_url.replace(encoded_password, "********")
-        logger.info(f"🔍 Using constructed DB_URL: {redacted_url}")
-        
         return final_url
 
     @property
