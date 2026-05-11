@@ -39,7 +39,7 @@ class Settings(BaseSettings):
 
     # Individual fields — used for local development
     DATABASE_HOST: str = "aws-1-ap-northeast-1.pooler.supabase.com"
-    DATABASE_PORT: int = 5432
+    DATABASE_PORT: int = 6543
     DATABASE_NAME: str = "postgres"
     DATABASE_USER: str = "postgres.arhrzzeteeplrxscxdtz"
     DATABASE_PASSWORD: str = "Yogi@859592"
@@ -60,12 +60,12 @@ class Settings(BaseSettings):
         
         final_url = (
             f"postgresql+asyncpg://{encoded_user}:{encoded_password}"
-            f"@{host}:{self.DATABASE_PORT}/{db_name}"
+            f"@{host}:6543/{db_name}"
         )
         
-        # Log the URL (redacted) for debugging on Hugging Face
+        # Log for debugging on Hugging Face using logger
         redacted_url = final_url.replace(encoded_password, "********")
-        print(f"DEBUG: Connecting to {redacted_url}")
+        logger.info(f"🔍 DB_DEBUG: {redacted_url}")
         
         return final_url
 
