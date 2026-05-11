@@ -11,6 +11,9 @@ import re
 from urllib.parse import quote
 
 
+from loguru import logger
+
+
 class Settings(BaseSettings):
     """
     Central configuration class.
@@ -34,7 +37,8 @@ class Settings(BaseSettings):
                 raise ValueError("JWT_SECRET_KEY must be set and changed from default in production")
 
     # --- Database (PostgreSQL) ---
-    # Render provides a full DATABASE_URL — use it if available (takes priority)
+    # Render/HuggingFace provides a full DATABASE_URL — use it if available
+    DATABASE_URL: Optional[str] = None
     DATABASE_URL_OVERRIDE: Optional[str] = None
 
     # Individual fields — used for local development
@@ -45,35 +49,39 @@ class Settings(BaseSettings):
     DATABASE_PASSWORD: str = "Yogi@859592"
 
     @property
-    def DATABASE_URL(self) -> str:
-        """Async PostgreSQL URL. Uses DATABASE_URL_OVERRIDE if set (Render provides this)."""
-        if self.DATABASE_URL_OVERRIDE:
-            # Render gives postgresql:// or postgres:// — convert to asyncpg driver
-            url = re.sub(r"^postgresql://", "postgresql+asyncpg://", self.DATABASE_URL_OVERRIDE)
+    def DATABASE_URL_FINAL(self) -> str:
+        """Async PostgreSQL URL. Priority: DATABASE_URL_OVERRIDE > DATABASE_URL > Individual Fields."""
+        raw_url = self.DATABASE_URL_OVERRIDE or self.DATABASE_URL
+        
+        if raw_url:
+            # Convert to asyncpg driver if necessary
+            url = re.sub(r"^postgresql://", "postgresql+asyncpg://", raw_url)
             url = re.sub(r"^postgres://", "postgresql+asyncpg://", url)
             return url
         
         encoded_user = quote(self.DATABASE_USER.strip())
         encoded_password = quote(self.DATABASE_PASSWORD.strip())
         host = self.DATABASE_HOST.strip()
+        port = self.DATABASE_PORT
         db_name = self.DATABASE_NAME.strip()
         
         final_url = (
             f"postgresql+asyncpg://{encoded_user}:{encoded_password}"
-            f"@{host}:6543/{db_name}"
+            f"@{host}:{port}/{db_name}"
         )
         
-        # Log for debugging on Hugging Face using logger
+        # Log for debugging (redacted)
         redacted_url = final_url.replace(encoded_password, "********")
-        logger.info(f"🔍 DB_DEBUG: {redacted_url}")
+        logger.info(f"🔍 DB_URL constructed: {redacted_url}")
         
         return final_url
 
     @property
     def DATABASE_URL_SYNC(self) -> str:
         """Synchronous URL for Alembic migrations."""
-        if self.DATABASE_URL_OVERRIDE:
-            url = re.sub(r"^postgresql://", "postgresql+psycopg2://", self.DATABASE_URL_OVERRIDE)
+        raw_url = self.DATABASE_URL_OVERRIDE or self.DATABASE_URL
+        if raw_url:
+            url = re.sub(r"^postgresql://", "postgresql+psycopg2://", raw_url)
             url = re.sub(r"^postgres://", "postgresql+psycopg2://", url)
             return url
         

@@ -8,13 +8,19 @@ Provides a dependency (get_db) for FastAPI route injection.
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from backend.config import settings
 
+# Determine if we should use SSL (recommended for Supabase)
+connect_args = {}
+if "localhost" not in settings.DATABASE_URL_FINAL and "127.0.0.1" not in settings.DATABASE_URL_FINAL:
+    connect_args["ssl"] = True
+
 # Async engine — connects to PostgreSQL
 engine = create_async_engine(
-    settings.DATABASE_URL,
+    settings.DATABASE_URL_FINAL,
     echo=settings.DEBUG,       # Log SQL queries in dev mode
     pool_size=20,              # Connection pool size
     max_overflow=10,           # Extra connections when pool is full
     pool_pre_ping=True,        # Verify connections before use
+    connect_args=connect_args,
 )
 
 # Session factory — creates new sessions
