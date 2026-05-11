@@ -42,6 +42,14 @@ async def lifespan(app: FastAPI):
     logger.info("🚀 Campus Sphere starting up...")
     logger.info(f"📌 Environment: {settings.APP_ENV}")
     logger.info(f"🗄️  Database: {settings.DATABASE_HOST}:{settings.DATABASE_PORT}/{settings.DATABASE_NAME}")
+    
+    # DNS Diagnostic
+    import socket
+    try:
+        ip = socket.gethostbyname(settings.DATABASE_HOST.strip())
+        logger.info(f"🌐 DNS Check: {settings.DATABASE_HOST} -> {ip}")
+    except Exception as dns_err:
+        logger.error(f"🌐 DNS Check FAILED for {settings.DATABASE_HOST}: {dns_err}")
 
     # Create tables if they don't exist
     try:
