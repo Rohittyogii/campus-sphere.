@@ -57,6 +57,7 @@ class Settings(BaseSettings):
             # Convert to asyncpg driver if necessary
             url = re.sub(r"^postgresql://", "postgresql+asyncpg://", raw_url)
             url = re.sub(r"^postgres://", "postgresql+asyncpg://", url)
+            logger.info(f"🔍 Using DATABASE_URL (overridden): {url.split('@')[-1]}") # Log only host part
             return url
         
         encoded_user = quote(self.DATABASE_USER.strip())
@@ -72,7 +73,7 @@ class Settings(BaseSettings):
         
         # Log for debugging (redacted)
         redacted_url = final_url.replace(encoded_password, "********")
-        logger.info(f"🔍 DB_URL constructed: {redacted_url}")
+        logger.info(f"🔍 Using constructed DB_URL: {redacted_url}")
         
         return final_url
 

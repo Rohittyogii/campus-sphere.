@@ -53,3 +53,4 @@ htmlcov/
 scratch/
 fix_*.js
 schedule_component.js
+.agents/
