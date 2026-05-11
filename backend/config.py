@@ -8,6 +8,7 @@ Uses pydantic-settings for type-safe configuration.
 from pydantic_settings import BaseSettings
 from typing import List, Optional
 import re
+from urllib.parse import quote
 
 
 class Settings(BaseSettings):
@@ -51,8 +52,9 @@ class Settings(BaseSettings):
             url = re.sub(r"^postgresql://", "postgresql+asyncpg://", self.DATABASE_URL_OVERRIDE)
             url = re.sub(r"^postgres://", "postgresql+asyncpg://", url)
             return url
+        encoded_password = quote(self.DATABASE_PASSWORD)
         return (
-            f"postgresql+asyncpg://{self.DATABASE_USER}:{self.DATABASE_PASSWORD}"
+            f"postgresql+asyncpg://{self.DATABASE_USER}:{encoded_password}"
             f"@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}"
         )
 
@@ -63,8 +65,9 @@ class Settings(BaseSettings):
             url = re.sub(r"^postgresql://", "postgresql+psycopg2://", self.DATABASE_URL_OVERRIDE)
             url = re.sub(r"^postgres://", "postgresql+psycopg2://", url)
             return url
+        encoded_password = quote(self.DATABASE_PASSWORD)
         return (
-            f"postgresql+psycopg2://{self.DATABASE_USER}:{self.DATABASE_PASSWORD}"
+            f"postgresql+psycopg2://{self.DATABASE_USER}:{encoded_password}"
             f"@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}"
         )
 
