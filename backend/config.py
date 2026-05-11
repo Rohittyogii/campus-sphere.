@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     DATABASE_URL_OVERRIDE: Optional[str] = None
 
     # Individual fields — used for local development
-    DATABASE_HOST: str = "13.114.6.6"
+    DATABASE_HOST: str = "aws-1-ap-northeast-1.pooler.supabase.com"
     DATABASE_PORT: int = 5432
     DATABASE_NAME: str = "postgres"
     DATABASE_USER: str = "postgres.arhrzzeteeplrxscxdtz"
@@ -53,12 +53,21 @@ class Settings(BaseSettings):
             url = re.sub(r"^postgres://", "postgresql+asyncpg://", url)
             return url
         
-        encoded_user = quote(self.DATABASE_USER)
-        encoded_password = quote(self.DATABASE_PASSWORD)
-        return (
+        encoded_user = quote(self.DATABASE_USER.strip())
+        encoded_password = quote(self.DATABASE_PASSWORD.strip())
+        host = self.DATABASE_HOST.strip()
+        db_name = self.DATABASE_NAME.strip()
+        
+        final_url = (
             f"postgresql+asyncpg://{encoded_user}:{encoded_password}"
-            f"@{self.DATABASE_HOST}:{self.DATABASE_PORT}/{self.DATABASE_NAME}"
+            f"@{host}:{self.DATABASE_PORT}/{db_name}"
         )
+        
+        # Log the URL (redacted) for debugging on Hugging Face
+        redacted_url = final_url.replace(encoded_password, "********")
+        print(f"DEBUG: Connecting to {redacted_url}")
+        
+        return final_url
 
     @property
     def DATABASE_URL_SYNC(self) -> str:
