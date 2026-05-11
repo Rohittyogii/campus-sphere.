@@ -53,3 +53,22 @@ services:
         sync: false
       - key: CORS_ORIGINS
         sync: false
+
+  - type: web
+    name: campus-sphere-ui
+    plan: free
+    runtime: static
+    buildCommand: cd frontend && npm install && npm run build
+    publishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://rohitkumar85-campus-sphere.hf.space/api/v1
+      - key: VITE_APP_NAME
+        value: CampusSphere
+    routes:
+      - type: rewrite
+        source: /assets/*
+        destination: /assets/*
+      - type: rewrite
+        source: /*
+        destination: /index.html
