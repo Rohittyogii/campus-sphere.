@@ -78,7 +78,7 @@ class Settings(BaseSettings):
 
     # --- Supabase Storage ---
     SUPABASE_URL: str = "https://arhrzzeteeplrxscxdtz.supabase.co"
-    SUPABASE_KEY: str = ""  # SERVICE_ROLE_KEY (REQUIRED for uploads)
+    SUPABASE_SERVICE_ROLE_KEY: str = ""  # Service role key
     SUPABASE_BUCKET: str = "uploads"
 
     # --- CORS ---

@@ -28,8 +28,8 @@ router = APIRouter()
 
 # Initialize Supabase Client
 supabase: Client = None
-if settings.SUPABASE_URL and settings.SUPABASE_KEY:
-    supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_KEY)
+if settings.SUPABASE_URL and settings.SUPABASE_SERVICE_ROLE_KEY:
+    supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_SERVICE_ROLE_KEY)
 
 class PostCreate(BaseModel):
     content: str
