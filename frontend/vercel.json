@@ -1,7 +1,6 @@
 {
   "rewrites": [
-    { "handle": "filesystem" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!assets/|cafe/|clubs/|iro/|library/|favicon.svg|icons.svg).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
