@@ -372,7 +372,7 @@ const IRO = ({ profile }) => {
         {/* ── Welcome Header ───────────────────────────────────── */}
         <div style={{ marginBottom: '1.5rem' }}>
           <h1 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '2.4rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>
-            Welcome, <span style={{ color: '#6366f1' }}>{profile?.full_name || 'Rohit Kumar'}!</span>
+            Welcome, <span style={{ color: '#6366f1' }}>{profile?.student_name || 'Student'}!</span>
           </h1>
         </div>
 
