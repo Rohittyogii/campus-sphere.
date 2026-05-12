@@ -34,7 +34,6 @@ import Feedback from './dashboard/Feedback';
 import Specialization from './dashboard/Specialization';
 import Placement from './dashboard/Placement';
 import './Dashboard.css';
-// Use direct path from public directory for stable production serving
 const sidebarLogo = '/assets/NCU-Logo.svg';
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -168,9 +167,9 @@ const Dashboard = () => {
 
         <div className="sidebar-header">
           <h2 style={{ marginBottom: 0, opacity: 1, transition: 'opacity 0.2s' }}>
-            <img 
-              src={sidebarLogo} 
-              alt="Logo" 
+            <img
+              src={sidebarLogo}
+              alt="Logo"
               className="brand-logo"
             />
             {!collapsed && (
@@ -241,9 +240,9 @@ const Dashboard = () => {
               <div style={{ fontSize: '13px', fontWeight: 700, color: '#231F20', lineHeight: 1.2 }}>{profile.student_name}</div>
               <div style={{ fontSize: '10px', color: '#64748b', fontWeight: 500 }}>{profile.roll_no || '21CSU234'}</div>
             </div>
-            <button 
-              className="header-icon-btn" 
-              title="Notifications" 
+            <button
+              className="header-icon-btn"
+              title="Notifications"
               onClick={() => setShowNotifDropdown(!showNotifDropdown)}
               style={{ background: 'transparent', width: '32px', height: '32px', position: 'relative' }}
             >
@@ -313,7 +312,7 @@ const Dashboard = () => {
       </main>
 
       {/* ─── Floating AI Chatbot ───────────────────────────────────────── */}
-      <button 
+      <button
         className={`ai-fab ${isChatOpen ? 'open' : ''}`}
         onClick={() => setIsChatOpen(!isChatOpen)}
         title="Campus AI Assistant"
@@ -352,9 +351,9 @@ const Dashboard = () => {
 
           <div className="ai-chat-input-area">
             <form onSubmit={handleChatSubmit}>
-              <input 
-                type="text" 
-                placeholder="Ask me anything..." 
+              <input
+                type="text"
+                placeholder="Ask me anything..."
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 disabled={isTyping}

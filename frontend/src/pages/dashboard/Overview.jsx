@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Calendar, Clock, BookOpen, MapPin, Activity, Award, CheckCircle, XCircle, GraduationCap, Target, ChevronRight, Bell, ArrowRight, ChevronLeft } from 'lucide-react';
 import api from '../../services/api';
-// Use direct paths from the public directory for stable production serving
 const campus1 = '/assets/campus1.png';
 const campus2 = '/assets/campus2.png';
 const campus3 = '/assets/campus3.png';
@@ -640,7 +639,7 @@ const Overview = ({ profile }) => {
                       <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: 0 }}>Announcements</h2>
                     </div>
                     {profile?.role === 'admin' && (
-                      <button 
+                      <button
                         onClick={() => setShowPostForm(!showPostForm)}
                         style={{ background: '#6366f115', border: 'none', color: '#6366f1', padding: '4px 8px', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 700, cursor: 'pointer' }}
                       >
@@ -652,24 +651,24 @@ const Overview = ({ profile }) => {
 
                   {showPostForm && (
                     <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '1rem', marginBottom: '1rem' }}>
-                      <input 
+                      <input
                         placeholder="Announcement Title"
                         value={newAnnouncement.title}
-                        onChange={e => setNewAnnouncement({...newAnnouncement, title: e.target.value})}
+                        onChange={e => setNewAnnouncement({ ...newAnnouncement, title: e.target.value })}
                         style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '0.5rem', fontSize: '0.8rem' }}
                       />
-                      <textarea 
+                      <textarea
                         placeholder="Description..."
                         value={newAnnouncement.description}
-                        onChange={e => setNewAnnouncement({...newAnnouncement, description: e.target.value})}
+                        onChange={e => setNewAnnouncement({ ...newAnnouncement, description: e.target.value })}
                         style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '0.5rem', fontSize: '0.8rem', minHeight: '60px' }}
                       />
                       <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem' }}>
                         {['info', 'warning', 'success'].map(t => (
-                          <button 
+                          <button
                             key={t}
-                            onClick={() => setNewAnnouncement({...newAnnouncement, type: t})}
-                            style={{ 
+                            onClick={() => setNewAnnouncement({ ...newAnnouncement, type: t })}
+                            style={{
                               flex: 1, padding: '4px', borderRadius: '6px', fontSize: '0.65rem', border: '1px solid',
                               background: newAnnouncement.type === t ? '#6366f1' : '#fff',
                               color: newAnnouncement.type === t ? '#fff' : '#64748b',
@@ -680,7 +679,7 @@ const Overview = ({ profile }) => {
                           </button>
                         ))}
                       </div>
-                      <button 
+                      <button
                         onClick={handlePostAnnouncement}
                         disabled={isPosting || !newAnnouncement.title || !newAnnouncement.description}
                         style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', background: '#6366f1', color: '#fff', border: 'none', fontWeight: 700, fontSize: '0.8rem', cursor: 'pointer', opacity: isPosting ? 0.7 : 1 }}

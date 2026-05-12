@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import api from '../services/api';
 import './Login.css';
-// Use direct paths from the public directory for stable production serving
 const universityLogo = '/assets/logo.png';
 const login1 = '/assets/login_1.jpg';
 const login2 = '/assets/login_2.jpg';

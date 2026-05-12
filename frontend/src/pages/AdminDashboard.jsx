@@ -8,19 +8,18 @@ import {
   FileUp, FileDown
 } from 'lucide-react';
 import api from '../services/api';
-// Use direct path from public directory for stable production serving
 const sidebarLogo = '/assets/NCU-Logo.svg';
 import './Dashboard.css';
 
 // ─── Sidebar tabs ────────────────────────────────────────────────────────────
 const TABS = [
-  { key: 'stats',       label: 'Platform Stats',   icon: BarChart2, section: 'MANAGEMENT' },
-  { key: 'modules',     label: 'Module Registry',  icon: ToggleRight },
-  { key: 'students',    label: 'Student List',     icon: Users },
-  { key: 'lost_found',  label: 'Lost & Found Queue',icon: Search },
-  { key: 'iro',         label: 'IRO Applications', icon: Globe },
+  { key: 'stats', label: 'Platform Stats', icon: BarChart2, section: 'MANAGEMENT' },
+  { key: 'modules', label: 'Module Registry', icon: ToggleRight },
+  { key: 'students', label: 'Student List', icon: Users },
+  { key: 'lost_found', label: 'Lost & Found Queue', icon: Search },
+  { key: 'iro', label: 'IRO Applications', icon: Globe },
   { key: 'announcements', label: 'Announcements', icon: Bell },
-  { key: 'feedback',    label: 'Feedback Summary',  icon: MessageSquare },
+  { key: 'feedback', label: 'Feedback Summary', icon: MessageSquare },
 ];
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -52,12 +51,12 @@ const appStatusColor = (s) => {
 
 // ─── Admin Dashboard ──────────────────────────────────────────────────────────
 const AdminDashboard = () => {
-  const [tab, setTab]           = useState('stats');
-  const [stats, setStats]       = useState(null);
-  const [modules, setModules]   = useState([]);
+  const [tab, setTab] = useState('stats');
+  const [stats, setStats] = useState(null);
+  const [modules, setModules] = useState([]);
   const [students, setStudents] = useState([]);
-  const [pending, setPending]   = useState([]);
-  const [iroApps, setIroApps]   = useState([]);
+  const [pending, setPending] = useState([]);
+  const [iroApps, setIroApps] = useState([]);
   const [announcements, setAnnouncements] = useState([]);
   const [newAnnouncement, setNewAnnouncement] = useState({ title: '', description: '', type: 'info' });
   const [showAddStudent, setShowAddStudent] = useState(false);
@@ -67,7 +66,7 @@ const AdminDashboard = () => {
   const [activeFilterMenu, setActiveFilterMenu] = useState(null); // 'branch', 'role', etc.
   const [feedbackSummary, setFeedbackSummary] = useState([]);
   const [feedbackList, setFeedbackList] = useState([]);
-  const [loading, setLoading]   = useState(false);
+  const [loading, setLoading] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
@@ -76,13 +75,13 @@ const AdminDashboard = () => {
   useEffect(() => {
     setLoading(true);
     const fetchers = {
-      stats:      () => api.get('/admin/stats').then(r => setStats(r.data)),
-      modules:    () => api.get('/admin/modules').then(r => setModules(r.data)),
-      students:   () => api.get('/admin/students?limit=500').then(r => setStudents(r.data)),
+      stats: () => api.get('/admin/stats').then(r => setStats(r.data)),
+      modules: () => api.get('/admin/modules').then(r => setModules(r.data)),
+      students: () => api.get('/admin/students?limit=500').then(r => setStudents(r.data)),
       lost_found: () => api.get('/lost-found/pending').then(r => setPending(r.data)),
-      iro:        () => api.get('/iro/applications').then(r => setIroApps(r.data)),
+      iro: () => api.get('/iro/applications').then(r => setIroApps(r.data)),
       announcements: () => api.get('/announcements/').then(r => setAnnouncements(r.data)),
-      feedback:   () => Promise.all([
+      feedback: () => Promise.all([
         api.get('/feedback/summary'),
         api.get('/feedback/')
       ]).then(([sum, list]) => {
@@ -202,16 +201,16 @@ const AdminDashboard = () => {
       case 'stats':
         return stats ? (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.25rem' }}>
-            <StatCard label="Total Students"         value={stats.total_students}        color="#0ea5e9" icon={Users} />
-            <StatCard label="Books in Library"       value={stats.total_books}           color="#818cf8" icon={BarChart2} />
-            <StatCard label="Books Issued"           value={stats.total_issued}          color="#f59e0b" icon={BarChart2} />
-            <StatCard label="Cafe Items"             value={stats.total_cafe_items}      color="#ec4899" icon={BarChart2} />
-            <StatCard label="Campus Clubs"           value={stats.total_clubs}           color="#10b981" icon={Users} />
-            <StatCard label="Events"                 value={stats.total_events}          color="#a855f7" icon={BarChart2} />
-            <StatCard label="Hackathons"             value={stats.total_hackathons}      color="#f43f5e" icon={BarChart2} />
-            <StatCard label="Open Electives"         value={stats.total_open_electives}  color="#0ea5e9" icon={BarChart2} />
-            <StatCard label="Lost & Found Reports"   value={stats.total_lost_found_reports} color="#64748b" icon={Search} />
-            <StatCard label="Pending L&F Approvals"  value={stats.pending_lost_found}    color="#f43f5e" icon={Clock} />
+            <StatCard label="Total Students" value={stats.total_students} color="#0ea5e9" icon={Users} />
+            <StatCard label="Books in Library" value={stats.total_books} color="#818cf8" icon={BarChart2} />
+            <StatCard label="Books Issued" value={stats.total_issued} color="#f59e0b" icon={BarChart2} />
+            <StatCard label="Cafe Items" value={stats.total_cafe_items} color="#ec4899" icon={BarChart2} />
+            <StatCard label="Campus Clubs" value={stats.total_clubs} color="#10b981" icon={Users} />
+            <StatCard label="Events" value={stats.total_events} color="#a855f7" icon={BarChart2} />
+            <StatCard label="Hackathons" value={stats.total_hackathons} color="#f43f5e" icon={BarChart2} />
+            <StatCard label="Open Electives" value={stats.total_open_electives} color="#0ea5e9" icon={BarChart2} />
+            <StatCard label="Lost & Found Reports" value={stats.total_lost_found_reports} color="#64748b" icon={Search} />
+            <StatCard label="Pending L&F Approvals" value={stats.pending_lost_found} color="#f43f5e" icon={Clock} />
           </div>
         ) : null;
 
@@ -246,7 +245,7 @@ const AdminDashboard = () => {
               <h3 style={{ fontSize: '1rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>Registered Students</h3>
               <div style={{ display: 'flex', gap: '0.75rem' }}>
                 <div style={{ position: 'relative' }}>
-                  <button 
+                  <button
                     onClick={() => setShowBulkMenu(!showBulkMenu)}
                     style={{ background: '#f8fafc', color: '#6366f1', border: '1px solid #6366f130', padding: '0.6rem 1.25rem', borderRadius: '12px', fontWeight: 800, fontSize: '0.75rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                   >
@@ -256,9 +255,9 @@ const AdminDashboard = () => {
                   {showBulkMenu && (
                     <div style={{ position: 'absolute', top: '110%', right: 0, zIndex: 100, background: '#fff', border: '1px solid #e2e8f0', borderRadius: '20px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', padding: '1.25rem', minWidth: '260px' }}>
                       <div style={{ fontSize: '0.85rem', fontWeight: 900, color: '#0f172a', marginBottom: '1rem' }}>Bulk Registration</div>
-                      
+
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                        <div 
+                        <div
                           onClick={() => { downloadTemplate(); setShowBulkMenu(false); }}
                           style={{ padding: '1rem', borderRadius: '16px', background: '#f8fafc', border: '1px solid #e2e8f0', cursor: 'pointer', transition: 'transform 0.2s' }}
                           onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
@@ -271,7 +270,7 @@ const AdminDashboard = () => {
                           <p style={{ margin: 0, fontSize: '0.7rem', color: '#64748b', lineHeight: 1.4 }}>Download the Excel format to fill student data.</p>
                         </div>
 
-                        <label 
+                        <label
                           style={{ padding: '1rem', borderRadius: '16px', background: '#6366f108', border: '1px dashed #6366f140', cursor: 'pointer', display: 'block', transition: 'transform 0.2s' }}
                           onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
                           onMouseOut={e => e.currentTarget.style.transform = 'translateY(0)'}
@@ -288,7 +287,7 @@ const AdminDashboard = () => {
                   )}
                 </div>
 
-                <button 
+                <button
                   onClick={() => setShowAddStudent(!showAddStudent)}
                   style={{ background: '#6366f1', color: '#fff', border: 'none', padding: '0.6rem 1.25rem', borderRadius: '12px', fontWeight: 800, fontSize: '0.75rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
                 >
@@ -299,17 +298,17 @@ const AdminDashboard = () => {
 
             {showAddStudent && (
               <div style={{ background: '#fff', padding: '1.5rem', borderRadius: '24px', border: '1px solid #e2e8f0', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-                <input placeholder="Full Name" value={newStudent.student_name} onChange={e => setNewStudent({...newStudent, student_name: e.target.value})} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
-                <input placeholder="Roll No (e.g. 22CSU123)" value={newStudent.roll_no} onChange={e => setNewStudent({...newStudent, roll_no: e.target.value})} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
-                <input placeholder="Email Address" value={newStudent.email} onChange={e => setNewStudent({...newStudent, email: e.target.value})} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
-                <input placeholder="Password" type="password" value={newStudent.password} onChange={e => setNewStudent({...newStudent, password: e.target.value})} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
-                <input placeholder="Branch (e.g. SOET)" value={newStudent.branch} onChange={e => setNewStudent({...newStudent, branch: e.target.value})} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
-                <input placeholder="Specialization" value={newStudent.specialization} onChange={e => setNewStudent({...newStudent, specialization: e.target.value})} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
-                <select value={newStudent.role} onChange={e => setNewStudent({...newStudent, role: e.target.value})} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }}>
+                <input placeholder="Full Name" value={newStudent.student_name} onChange={e => setNewStudent({ ...newStudent, student_name: e.target.value })} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
+                <input placeholder="Roll No (e.g. 22CSU123)" value={newStudent.roll_no} onChange={e => setNewStudent({ ...newStudent, roll_no: e.target.value })} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
+                <input placeholder="Email Address" value={newStudent.email} onChange={e => setNewStudent({ ...newStudent, email: e.target.value })} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
+                <input placeholder="Password" type="password" value={newStudent.password} onChange={e => setNewStudent({ ...newStudent, password: e.target.value })} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
+                <input placeholder="Branch (e.g. SOET)" value={newStudent.branch} onChange={e => setNewStudent({ ...newStudent, branch: e.target.value })} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
+                <input placeholder="Specialization" value={newStudent.specialization} onChange={e => setNewStudent({ ...newStudent, specialization: e.target.value })} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }} />
+                <select value={newStudent.role} onChange={e => setNewStudent({ ...newStudent, role: e.target.value })} style={{ padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#0f172a' }}>
                   <option value="student">Student</option>
                   <option value="admin">Administrator</option>
                 </select>
-                <button 
+                <button
                   onClick={handleAddStudent}
                   style={{ gridColumn: 'span 3', background: '#10b981', color: '#fff', border: 'none', padding: '0.85rem', borderRadius: '12px', fontWeight: 800, cursor: 'pointer' }}
                 >
@@ -319,96 +318,96 @@ const AdminDashboard = () => {
             )}
 
             <div style={{ background: '#fff', borderRadius: '24px', border: '1px solid #e2e8f0' }}>
-            <div style={{ overflow: 'visible' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', overflow: 'visible' }}>
-              <thead style={{ position: 'sticky', top: 0, zIndex: 10, background: '#f8fafc' }}>
-                <tr style={{ borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
-                  {['Name', 'Roll No', 'Email', 'Branch', 'Specialization', 'CGPA', 'Role'].map(h => {
-                    const filterKey = h.toLowerCase().replace(' ', '_');
-                    const hasFilter = ['Name', 'Roll No', 'Branch', 'Specialization', 'Role'].includes(h);
-                    const isActive = filters[filterKey] !== '';
+              <div style={{ overflow: 'visible' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem', overflow: 'visible' }}>
+                  <thead style={{ position: 'sticky', top: 0, zIndex: 10, background: '#f8fafc' }}>
+                    <tr style={{ borderBottom: '1px solid #e2e8f0', background: '#f8fafc' }}>
+                      {['Name', 'Roll No', 'Email', 'Branch', 'Specialization', 'CGPA', 'Role'].map(h => {
+                        const filterKey = h.toLowerCase().replace(' ', '_');
+                        const hasFilter = ['Name', 'Roll No', 'Branch', 'Specialization', 'Role'].includes(h);
+                        const isActive = filters[filterKey] !== '';
 
-                    return (
-                      <th key={h} style={{ position: 'relative', textAlign: 'left', padding: '1.25rem 1.5rem', color: '#64748b', fontWeight: 800, fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          {h}
-                          {hasFilter && (
-                            <Filter 
-                              size={12} 
-                              style={{ cursor: 'pointer', color: isActive ? '#6366f1' : '#94a3b8', transition: 'color 0.2s' }} 
-                              onClick={() => setActiveFilterMenu(activeFilterMenu === h ? null : h)}
-                            />
-                          )}
-                        </div>
-
-                        {activeFilterMenu === h && (
-                          <div style={{ position: 'absolute', top: '90%', left: '1.5rem', zIndex: 50, background: '#fff', border: '1px solid #e2e8f0', borderRadius: '14px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)', padding: '1rem', minWidth: '200px', textTransform: 'none', letterSpacing: 'normal' }}>
-                            <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between' }}>
-                              Filter {h}
-                              <span onClick={() => setFilters({...filters, [filterKey]: ''})} style={{ color: '#6366f1', cursor: 'pointer', fontWeight: 600 }}>Clear</span>
+                        return (
+                          <th key={h} style={{ position: 'relative', textAlign: 'left', padding: '1.25rem 1.5rem', color: '#64748b', fontWeight: 800, fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                              {h}
+                              {hasFilter && (
+                                <Filter
+                                  size={12}
+                                  style={{ cursor: 'pointer', color: isActive ? '#6366f1' : '#94a3b8', transition: 'color 0.2s' }}
+                                  onClick={() => setActiveFilterMenu(activeFilterMenu === h ? null : h)}
+                                />
+                              )}
                             </div>
-                            
-                            {['Name', 'Roll No'].includes(h) ? (
-                              <input 
-                                autoFocus
-                                value={filters[filterKey]} 
-                                onChange={e => setFilters({...filters, [filterKey]: e.target.value})} 
-                                placeholder={`Search ${h}...`} 
-                                style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.8rem', outline: 'none', background: '#f8fafc', color: '#0f172a' }} 
-                              />
-                            ) : (
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                                <div 
-                                  onClick={() => setFilters({...filters, [filterKey]: ''})}
-                                  style={{ padding: '0.5rem', borderRadius: '8px', cursor: 'pointer', background: filters[filterKey] === '' ? '#6366f115' : 'transparent', color: filters[filterKey] === '' ? '#6366f1' : '#475569', fontSize: '0.8rem', fontWeight: 600 }}
-                                >
-                                  All
+
+                            {activeFilterMenu === h && (
+                              <div style={{ position: 'absolute', top: '90%', left: '1.5rem', zIndex: 50, background: '#fff', border: '1px solid #e2e8f0', borderRadius: '14px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)', padding: '1rem', minWidth: '200px', textTransform: 'none', letterSpacing: 'normal' }}>
+                                <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.75rem', display: 'flex', justifyContent: 'space-between' }}>
+                                  Filter {h}
+                                  <span onClick={() => setFilters({ ...filters, [filterKey]: '' })} style={{ color: '#6366f1', cursor: 'pointer', fontWeight: 600 }}>Clear</span>
                                 </div>
-                                {(h === 'Branch' ? uniqueBranches : h === 'Specialization' ? uniqueSpecs : uniqueRoles).map(val => (
-                                  <div 
-                                    key={val}
-                                    onClick={() => setFilters({...filters, [filterKey]: val})}
-                                    style={{ padding: '0.5rem', borderRadius: '8px', cursor: 'pointer', background: filters[filterKey] === val ? '#6366f115' : 'transparent', color: filters[filterKey] === val ? '#6366f1' : '#475569', fontSize: '0.8rem', fontWeight: 600 }}
-                                  >
-                                    {val}
+
+                                {['Name', 'Roll No'].includes(h) ? (
+                                  <input
+                                    autoFocus
+                                    value={filters[filterKey]}
+                                    onChange={e => setFilters({ ...filters, [filterKey]: e.target.value })}
+                                    placeholder={`Search ${h}...`}
+                                    style={{ width: '100%', padding: '0.6rem', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '0.8rem', outline: 'none', background: '#f8fafc', color: '#0f172a' }}
+                                  />
+                                ) : (
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                                    <div
+                                      onClick={() => setFilters({ ...filters, [filterKey]: '' })}
+                                      style={{ padding: '0.5rem', borderRadius: '8px', cursor: 'pointer', background: filters[filterKey] === '' ? '#6366f115' : 'transparent', color: filters[filterKey] === '' ? '#6366f1' : '#475569', fontSize: '0.8rem', fontWeight: 600 }}
+                                    >
+                                      All
+                                    </div>
+                                    {(h === 'Branch' ? uniqueBranches : h === 'Specialization' ? uniqueSpecs : uniqueRoles).map(val => (
+                                      <div
+                                        key={val}
+                                        onClick={() => setFilters({ ...filters, [filterKey]: val })}
+                                        style={{ padding: '0.5rem', borderRadius: '8px', cursor: 'pointer', background: filters[filterKey] === val ? '#6366f115' : 'transparent', color: filters[filterKey] === val ? '#6366f1' : '#475569', fontSize: '0.8rem', fontWeight: 600 }}
+                                      >
+                                        {val}
+                                      </div>
+                                    ))}
                                   </div>
-                                ))}
+                                )}
+
+                                <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
+                                  <button
+                                    onClick={() => setActiveFilterMenu(null)}
+                                    style={{ background: '#0f172a', color: '#fff', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 700, cursor: 'pointer' }}
+                                  >
+                                    Apply
+                                  </button>
+                                </div>
                               </div>
                             )}
-                            
-                            <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
-                              <button 
-                                onClick={() => setActiveFilterMenu(null)}
-                                style={{ background: '#0f172a', color: '#fff', border: 'none', padding: '0.4rem 0.8rem', borderRadius: '6px', fontSize: '0.7rem', fontWeight: 700, cursor: 'pointer' }}
-                              >
-                                Apply
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                      </th>
-                    );
-                  })}
-                </tr>
-              </thead>
-              <tbody>
-                {filteredStudents.map((s) => (
-                  <tr key={s.id} style={{ borderBottom: '1px solid #f1f5f9', transition: 'background 0.2s' }}>
-                    <td style={{ padding: '1.25rem 1.5rem', color: '#0f172a', fontWeight: 700 }}>{s.name}</td>
-                    <td style={{ padding: '1.25rem 1.5rem', color: '#64748b', fontWeight: 600 }}>{s.roll_no}</td>
-                    <td style={{ padding: '1.25rem 1.5rem', color: '#64748b' }}>{s.email}</td>
-                    <td style={{ padding: '1.25rem 1.5rem', color: '#64748b' }}>{s.branch}</td>
-                    <td style={{ padding: '1.25rem 1.5rem', color: '#64748b' }}>{s.specialization || '—'}</td>
-                    <td style={{ padding: '1.25rem 1.5rem', color: s.cgpa >= 8 ? '#10b981' : s.cgpa >= 6.5 ? '#f59e0b' : '#f43f5e', fontWeight: 900 }}>{s.cgpa ?? '—'}</td>
-                    <td style={{ padding: '1.25rem 1.5rem' }}><StatusBadge text={s.role} color={s.role === 'admin' ? '#f43f5e' : '#818cf8'} /></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredStudents.map((s) => (
+                      <tr key={s.id} style={{ borderBottom: '1px solid #f1f5f9', transition: 'background 0.2s' }}>
+                        <td style={{ padding: '1.25rem 1.5rem', color: '#0f172a', fontWeight: 700 }}>{s.name}</td>
+                        <td style={{ padding: '1.25rem 1.5rem', color: '#64748b', fontWeight: 600 }}>{s.roll_no}</td>
+                        <td style={{ padding: '1.25rem 1.5rem', color: '#64748b' }}>{s.email}</td>
+                        <td style={{ padding: '1.25rem 1.5rem', color: '#64748b' }}>{s.branch}</td>
+                        <td style={{ padding: '1.25rem 1.5rem', color: '#64748b' }}>{s.specialization || '—'}</td>
+                        <td style={{ padding: '1.25rem 1.5rem', color: s.cgpa >= 8 ? '#10b981' : s.cgpa >= 6.5 ? '#f59e0b' : '#f43f5e', fontWeight: 900 }}>{s.cgpa ?? '—'}</td>
+                        <td style={{ padding: '1.25rem 1.5rem' }}><StatusBadge text={s.role} color={s.role === 'admin' ? '#f43f5e' : '#818cf8'} /></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    );
+        );
 
       case 'lost_found':
         return pending.length === 0 ? (
@@ -490,28 +489,28 @@ const AdminDashboard = () => {
             <div style={{ background: '#fff', padding: '1.5rem', borderRadius: '24px', border: '1px solid #e2e8f0', position: 'sticky', top: '1rem' }}>
               <h3 style={{ fontSize: '1rem', fontWeight: 900, color: '#0f172a', marginBottom: '1.25rem' }}>Create Announcement</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <input 
+                <input
                   placeholder="Title"
                   value={newAnnouncement.title}
-                  onChange={e => setNewAnnouncement({...newAnnouncement, title: e.target.value})}
+                  onChange={e => setNewAnnouncement({ ...newAnnouncement, title: e.target.value })}
                   style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '0.85rem', background: '#f8fafc', color: '#0f172a' }}
                 />
-                <textarea 
+                <textarea
                   placeholder="Description..."
                   value={newAnnouncement.description}
-                  onChange={e => setNewAnnouncement({...newAnnouncement, description: e.target.value})}
+                  onChange={e => setNewAnnouncement({ ...newAnnouncement, description: e.target.value })}
                   style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '0.85rem', minHeight: '100px', background: '#f8fafc', color: '#0f172a' }}
                 />
-                <select 
+                <select
                   value={newAnnouncement.type}
-                  onChange={e => setNewAnnouncement({...newAnnouncement, type: e.target.value})}
+                  onChange={e => setNewAnnouncement({ ...newAnnouncement, type: e.target.value })}
                   style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid #e2e8f0', fontSize: '0.85rem', background: '#f8fafc', color: '#0f172a' }}
                 >
                   <option value="info">Info (Blue)</option>
                   <option value="warning">Warning (Red)</option>
                   <option value="success">Success (Green)</option>
                 </select>
-                <button 
+                <button
                   onClick={postAnnouncement}
                   disabled={!newAnnouncement.title || !newAnnouncement.description}
                   style={{ width: '100%', padding: '0.85rem', borderRadius: '12px', background: '#6366f1', color: '#fff', border: 'none', fontWeight: 800, cursor: 'pointer', transition: 'opacity 0.2s' }}
@@ -616,9 +615,9 @@ const AdminDashboard = () => {
 
         <div className="sidebar-header">
           <h2 style={{ marginBottom: 0, opacity: 1, transition: 'opacity 0.2s' }}>
-            <img 
-              src={sidebarLogo} 
-              alt="Logo" 
+            <img
+              src={sidebarLogo}
+              alt="Logo"
               className="brand-logo"
             />
             {!collapsed && (
