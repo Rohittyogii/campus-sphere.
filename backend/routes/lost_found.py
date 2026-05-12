@@ -159,8 +159,12 @@ async def list_pending(
     """Admin only: list items awaiting approval."""
     if current_user.role != "admin":
         raise HTTPException(status_code=403, detail="Admin only")
+    
+    from sqlalchemy.orm import joinedload
     result = await db.execute(
-        select(LostFoundItem).where(LostFoundItem.admin_approved == "pending")
+        select(LostFoundItem)
+        .options(joinedload(LostFoundItem.poster))
+        .where(LostFoundItem.admin_approved == "pending")
     )
     return [_serialize(i) for i in result.scalars().all()]
 
