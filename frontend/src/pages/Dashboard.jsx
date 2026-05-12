@@ -33,6 +33,7 @@ import OpenElectives from './dashboard/OpenElectives';
 import Feedback from './dashboard/Feedback';
 import Specialization from './dashboard/Specialization';
 import Placement from './dashboard/Placement';
+import ReactMarkdown from 'react-markdown';
 import './Dashboard.css';
 const sidebarLogo = '/assets/NCU-Logo.svg';
 
@@ -335,7 +336,11 @@ const Dashboard = () => {
           <div className="ai-chat-messages">
             {chatMessages.map((msg, idx) => (
               <div key={idx} className={`ai-msg-bubble ${msg.role}`}>
-                {msg.content}
+                {msg.role === 'assistant' ? (
+                  <ReactMarkdown>{msg.content}</ReactMarkdown>
+                ) : (
+                  msg.content
+                )}
               </div>
             ))}
             {isTyping && (
