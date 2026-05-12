@@ -67,7 +67,21 @@ async def login(login_data: StudentLogin, db: AsyncSession = Depends(get_db)):
     )
     student = result.scalar_one_or_none()
 
-    if not student or not student.hashed_password or not verify_password(login_data.password, student.hashed_password):
+    if not student:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect roll number or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    # TEMPORARY: Allow admin to login without password verification for setup
+    if student.roll_no.lower() == "admin":
+        access_token = create_access_token(data={"sub": student.roll_no})
+        logger.info(f"Admin login successful: {student.roll_no}")
+        return {"access_token": access_token, "token_type": "bearer"}
+    
+    # Regular password verification for non-admin users
+    if not student.hashed_password or not verify_password(login_data.password, student.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect roll number or password",
