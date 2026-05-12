@@ -44,3 +44,5 @@ email-validator>=2.0.0
 
 # --- Utilities ---
 loguru>=0.7.0
+supabase>=2.10.0
+python-multipart>=0.0.6

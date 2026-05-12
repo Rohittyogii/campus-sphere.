@@ -63,16 +63,40 @@ async def upload_image(
     file: UploadFile = File(...),
     current_user: Student = Depends(get_current_active_student)
 ):
-    """Save an uploaded image and return its URL."""
+    """Save an uploaded image to Supabase Storage and return its URL."""
+    import os
+    from supabase import create_client
+    
     file_ext = os.path.splitext(file.filename)[1]
     unique_filename = f"{uuid.uuid4()}{file_ext}"
-    file_path = os.path.join("backend/static/uploads", unique_filename)
     
+    # Try to upload to Supabase if credentials exist
+    sb_url = os.getenv("SUPABASE_URL")
+    sb_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    
+    if sb_url and sb_key:
+        try:
+            supabase = create_client(sb_url, sb_key)
+            file_content = await file.read()
+            # Upload to 'uploads' bucket
+            supabase.storage.from_("uploads").upload(
+                path=unique_filename,
+                file=file_content,
+                file_options={"content-type": file.content_type}
+            )
+            # Get public URL
+            public_url = supabase.storage.from_("uploads").get_public_url(unique_filename)
+            return {"url": public_url}
+        except Exception as e:
+            print(f"Supabase upload error: {e}")
+            # Fallback to local if Supabase fails
+    
+    # Local fallback (for development)
+    file_path = os.path.join("backend/static/uploads", unique_filename)
+    os.makedirs(os.path.dirname(file_path), exist_ok=True)
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     
-    # Return the URL relative to the host (assuming /uploads is mounted)
-    # In production, this would be a full URL or S3 path
     return {"url": f"uploads/{unique_filename}"}
 
 @router.get("/")

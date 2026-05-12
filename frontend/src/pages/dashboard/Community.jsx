@@ -61,7 +61,11 @@ const PostCard = ({ post, onLike, onComment, currentUserId }) => {
 
       {post.image_url && (
         <div style={{ borderRadius: '16px', overflow: 'hidden', marginBottom: '1.5rem', border: '1px solid #f1f5f9' }}>
-          <img src={`${BASE_URL}/${post.image_url.replace(/^\//, '')}`} alt="Post" style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }} />
+          <img 
+            src={post.image_url.startsWith('http') ? post.image_url : `${BASE_URL}/${post.image_url.replace(/^\//, '')}`} 
+            alt="Post" 
+            style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }} 
+          />
         </div>
       )}
 
@@ -248,7 +252,11 @@ const Community = ({ profile }) => {
                 }}>
                   <div style={{ height: '120px', background: '#f8fafc', overflow: 'hidden' }}>
                     {item.image_url ? (
-                      <img src={`${BASE_URL}/${item.image_url.replace(/^\//, '')}`} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img 
+                        src={item.image_url.startsWith('http') ? item.image_url : `${BASE_URL}/${item.image_url.replace(/^\//, '')}`} 
+                        alt={item.title} 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                      />
                     ) : (
                       <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#cbd5e1' }}>
                         <Plus size={32} />
@@ -394,7 +402,11 @@ const Community = ({ profile }) => {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {form.image_url ? (
                     <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-                      <img src={`${BASE_URL}/${form.image_url.replace(/^\//, '')}`} alt="Preview" style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }} />
+                      <img 
+                        src={form.image_url.startsWith('http') ? form.image_url : `${BASE_URL}/${form.image_url.replace(/^\//, '')}`} 
+                        alt="Preview" 
+                        style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }} 
+                      />
                       <button 
                         type="button"
                         onClick={() => setForm(f => ({ ...f, image_url: '' }))}
