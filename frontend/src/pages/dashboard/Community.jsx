@@ -33,11 +33,11 @@ const PostCard = ({ post, onLike, onComment, currentUserId }) => {
   };
 
   return (
-    <div style={{ 
-      background: '#fff', 
-      borderRadius: '24px', 
-      border: '1px solid #eef2f6', 
-      padding: '1.5rem', 
+    <div style={{
+      background: '#fff',
+      borderRadius: '24px',
+      border: '1px solid #eef2f6',
+      padding: '1.5rem',
       marginBottom: '1.5rem',
       boxShadow: '0 4px 20px rgba(0,0,0,0.02)',
       transition: 'transform 0.2s ease'
@@ -70,13 +70,13 @@ const PostCard = ({ post, onLike, onComment, currentUserId }) => {
       )}
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', paddingBottom: showComments ? '1.5rem' : '0' }}>
-        <button 
+        <button
           onClick={() => onLike(post.id)}
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: 'none', cursor: 'pointer', color: isLiked ? '#f43f5e' : '#64748b', fontWeight: 700, fontSize: '0.85rem', transition: 'all 0.2s' }}
         >
           <Heart size={20} fill={isLiked ? '#f43f5e' : 'none'} /> {post.likes.length}
         </button>
-        <button 
+        <button
           onClick={() => setShowComments(!showComments)}
           style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'none', border: 'none', cursor: 'pointer', color: showComments ? '#8b5cf6' : '#64748b', fontWeight: 700, fontSize: '0.85rem' }}
         >
@@ -107,14 +107,14 @@ const PostCard = ({ post, onLike, onComment, currentUserId }) => {
           </div>
 
           <form onSubmit={handleCommentSubmit} style={{ display: 'flex', gap: '0.75rem' }}>
-            <input 
-              type="text" 
-              placeholder="Write a reply..." 
+            <input
+              type="text"
+              placeholder="Write a reply..."
               value={commentText}
               onChange={(e) => setCommentText(e.target.value)}
               style={{ flex: 1, padding: '0.75rem 1.25rem', borderRadius: '12px', border: '1px solid #e2e8f0', background: '#fff', fontSize: '0.85rem', fontWeight: 600, outline: 'none', color: '#0f172a' }}
             />
-            <button 
+            <button
               type="submit"
               style={{ width: '40px', height: '40px', borderRadius: '12px', background: '#8b5cf6', color: '#fff', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
@@ -208,7 +208,7 @@ const Community = ({ profile }) => {
   return (
     <div style={{ background: '#FFFFFF', minHeight: '100vh', padding: '0.75rem 1.75rem 4rem' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-        
+
         {/* Header */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2.5rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '1.5rem' }}>
           <div>
@@ -220,10 +220,10 @@ const Community = ({ profile }) => {
             </h1>
           </div>
 
-          <button 
+          <button
             onClick={() => setShowCreate(true)}
-            style={{ 
-              padding: '0.75rem 1.5rem', borderRadius: '14px', background: '#0f172a', color: '#fff', border: 'none', 
+            style={{
+              padding: '0.75rem 1.5rem', borderRadius: '14px', background: '#0f172a', color: '#fff', border: 'none',
               fontWeight: 700, fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.6rem',
               boxShadow: '0 4px 12px rgba(15,23,42,0.2)'
             }}
@@ -240,13 +240,13 @@ const Community = ({ profile }) => {
               <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#f43f5e', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Lost on Campus</span>
               <div style={{ flex: 1, height: '1px', background: '#f1f5f9', marginLeft: '1rem' }} />
             </div>
-            
-            <div style={{ 
-              display: 'flex', gap: '1.25rem', overflowX: 'auto', paddingBottom: '1rem', 
-              scrollbarWidth: 'none', msOverflowStyle: 'none' 
+
+            <div style={{
+              display: 'flex', gap: '1.25rem', overflowX: 'auto', paddingBottom: '1rem',
+              scrollbarWidth: 'none', msOverflowStyle: 'none'
             }}>
               {lostItems.map(item => (
-                <div key={item.id} style={{ 
+                <div key={item.id} style={{
                   flex: '0 0 280px', background: '#fff', borderRadius: '20px', border: '1px solid #eef2f6', overflow: 'hidden',
                   boxShadow: '0 4px 15px rgba(0,0,0,0.03)', position: 'relative'
                 }}>
@@ -266,12 +266,12 @@ const Community = ({ profile }) => {
                   <div style={{ padding: '1rem' }}>
                     <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.9rem', marginBottom: '0.25rem' }}>{item.title}</div>
                     <div style={{ fontSize: '0.75rem', color: '#64748b', marginBottom: '0.75rem' }}>{item.location_found}</div>
-                    <button 
+                    <button
                       onClick={() => handleClaim(item.id)}
-                      style={{ 
-                        width: '100%', padding: '0.5rem', borderRadius: '10px', background: '#0f172a', color: '#fff', 
-                        border: 'none', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer', display: 'flex', 
-                        alignItems: 'center', justifyContent: 'center', gap: '0.4rem' 
+                      style={{
+                        width: '100%', padding: '0.5rem', borderRadius: '10px', background: '#0f172a', color: '#fff',
+                        border: 'none', fontWeight: 700, fontSize: '0.75rem', cursor: 'pointer', display: 'flex',
+                        alignItems: 'center', justifyContent: 'center', gap: '0.4rem'
                       }}
                     >
                       Mark as Claimed →
@@ -285,7 +285,7 @@ const Community = ({ profile }) => {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '2.5rem' }}>
 
-          
+
           {/* Main Feed */}
           <div>
             {loading ? (
@@ -346,9 +346,9 @@ const Community = ({ profile }) => {
       {showCreate && (
         <div style={{ position: 'fixed', inset: 0, background: 'rgba(15,23,42,0.4)', backdropFilter: 'blur(8px)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
           <div style={{ background: '#fff', width: '100%', maxWidth: '600px', borderRadius: '28px', padding: '2.5rem', boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)', position: 'relative' }}>
-            <button 
-                onClick={() => setShowCreate(false)}
-                style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', width: '36px', height: '36px', borderRadius: '12px', border: 'none', background: '#f8fafc', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            <button
+              onClick={() => setShowCreate(false)}
+              style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', width: '36px', height: '36px', borderRadius: '12px', border: 'none', background: '#f8fafc', color: '#64748b', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               <X size={20} />
             </button>
@@ -370,7 +370,7 @@ const Community = ({ profile }) => {
                       key={cat}
                       type="button"
                       onClick={() => setForm(f => ({ ...f, category: cat }))}
-                      style={{ 
+                      style={{
                         padding: '0.5rem 1rem', borderRadius: '10px', border: '1px solid',
                         borderColor: form.category === cat ? '#8b5cf6' : '#e2e8f0',
                         background: form.category === cat ? '#f5f3ff' : '#fff',
@@ -386,13 +386,13 @@ const Community = ({ profile }) => {
 
               <div>
                 <label style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b', marginBottom: '0.5rem', display: 'block' }}>Content</label>
-                <textarea 
-                  required 
-                  placeholder="What's happening?" 
-                  rows={4} 
-                  value={form.content} 
-                  onChange={e => setForm(f => ({ ...f, content: e.target.value }))} 
-                  style={{ width: '100%', padding: '1rem', borderRadius: '16px', border: '1px solid #e2e8f0', background: '#f8fafc', fontSize: '1rem', color: '#0f172a', fontWeight: 600, outline: 'none', resize: 'none' }} 
+                <textarea
+                  required
+                  placeholder="What's happening?"
+                  rows={4}
+                  value={form.content}
+                  onChange={e => setForm(f => ({ ...f, content: e.target.value }))}
+                  style={{ width: '100%', padding: '1rem', borderRadius: '16px', border: '1px solid #e2e8f0', background: '#f8fafc', fontSize: '1rem', color: '#0f172a', fontWeight: 600, outline: 'none', resize: 'none' }}
                 />
               </div>
 
@@ -407,7 +407,7 @@ const Community = ({ profile }) => {
                         alt="Preview" 
                         style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }} 
                       />
-                      <button 
+                      <button
                         type="button"
                         onClick={() => setForm(f => ({ ...f, image_url: '' }))}
                         style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', background: 'rgba(0,0,0,0.5)', color: '#fff', border: 'none', borderRadius: '50%', width: '24px', height: '24px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
@@ -416,10 +416,10 @@ const Community = ({ profile }) => {
                       </button>
                     </div>
                   ) : (
-                    <label style={{ 
-                      width: '100%', padding: '2rem', borderRadius: '16px', border: '2px dashed #e2e8f0', 
-                      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', 
-                      cursor: 'pointer', background: '#f8fafc', transition: 'all 0.2s' 
+                    <label style={{
+                      width: '100%', padding: '2rem', borderRadius: '16px', border: '2px dashed #e2e8f0',
+                      display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem',
+                      cursor: 'pointer', background: '#f8fafc', transition: 'all 0.2s'
                     }}>
                       <input type="file" accept="image/*" onChange={handleFileUpload} style={{ display: 'none' }} />
                       <ImageIcon size={32} color="#94a3b8" />

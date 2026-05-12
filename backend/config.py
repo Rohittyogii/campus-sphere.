@@ -76,6 +76,11 @@ class Settings(BaseSettings):
     # --- Mistral AI ---
     MISTRAL_API_KEY: str = ""
 
+    # --- Supabase Storage ---
+    SUPABASE_URL: str = "https://arhrzzeteeplrxscxdtz.supabase.co"
+    SUPABASE_KEY: str = ""  # SERVICE_ROLE_KEY (REQUIRED for uploads)
+    SUPABASE_BUCKET: str = "uploads"
+
     # --- CORS ---
     CORS_ORIGINS: str = "http://localhost:5173,http://localhost:3000"
 
